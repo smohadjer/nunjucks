@@ -1,13 +1,15 @@
 {
-	"name": "boilerplate",
-	"version": "0.0.1",
-	"description": "Boilerplate for Web projects",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/smohadjer/boilerplate"
-	},
-    "license": "MIT",
-	"devDependencies": {
-		"gulp-sass": "2.1.1"
-	}
+  "name": "handlebars",
+  "version": "0.0.1",
+  "description": "demo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smohadjer/handlebars"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "gulp-connect": "^4.0.0",
+    "gulp-sass": "2.1.1",
+    "opn": "3.0.2"
+  }
 }
