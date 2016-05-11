@@ -1,38 +1,21 @@
 var gulp = require('gulp'),
-	sass = require('gulp-sass'),
 	opn = require('opn'),
-	connect = require('gulp-connect');
-
-var handlebars = require('gulp-handlebars');
-var wrap = require('gulp-wrap');
-var declare = require('gulp-declare');
-var concat = require('gulp-concat');
+	connect = require('gulp-connect'),
+	concat = require('gulp-concat'),
+	nunjucks = require('gulp-nunjucks');
 
 // Rerun the task when a file changes
 gulp.task('watch', function() {
-	gulp.watch('app/resources/css/*', ['sass']);
+	gulp.watch('app/views/*.html', ['templates']);
 });
 
-gulp.task('sass', function () {
-	var stream = gulp.src('app/resources/css/styles.scss')
-		.pipe(sass().on('error', sass.logError))
-		.pipe(gulp.dest('app/resources/css'));
-	return stream;
-});
-
-gulp.task('templates', function(){
-  gulp.src('app/resources/templates/*.hbs')
-    .pipe(handlebars({
-      handlebars: require('handlebars')
-	}))
-    .pipe(wrap('Handlebars.template(<%= contents %>)'))
-    .pipe(declare({
-      namespace: 'MyApp.templates',
-      noRedeclare: true, // Avoid duplicate declarations
-    }))
-    .pipe(concat('templates.js'))
-    .pipe(gulp.dest('app/resources/templates/'));
-});
+gulp.task('templates', function() {
+		gulp.src('app/views/*.html')
+			.pipe(nunjucks.precompile())
+			.pipe(concat('templates.js'))
+			.pipe(gulp.dest('app/resources/js'))
+	}
+);
 
 gulp.task('connect', function() {
   connect.server({
@@ -46,4 +29,4 @@ gulp.task('open', ['connect'], function () {
 });
 
 // serve development templates
-gulp.task('serve', ['open', 'templates', 'sass', 'watch']);
+gulp.task('serve', ['open', 'templates', 'watch']);
